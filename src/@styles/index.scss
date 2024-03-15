@@ -5,6 +5,15 @@
 @import './utils/index.scss';
 @import './core/index.scss';
 
+@layer components {
+  .spinner {
+    display: block;
+    .ant-spin-dot-item {
+      background-color: var(--color-primary);
+    }
+  }
+}
+
 // Scrollbar Customize
 ::-webkit-scrollbar {
   width: 0.25rem;

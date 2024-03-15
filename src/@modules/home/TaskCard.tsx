@@ -56,11 +56,12 @@ const TaskCard: React.FC<IProps> = ({ task, setTask }) => {
             key="ellipsis"
             content={
               <div className="flex flex-col gap-2">
-                {status?.map((elem) => {
+                {status?.map((elem, idx) => {
                   if (elem?.value === task?.status) return;
 
                   return (
                     <Button
+                      key={idx}
                       type="text"
                       onClick={() => {
                         dispatch(updateTask({ id: task?.id, task: { status: elem?.value } }));

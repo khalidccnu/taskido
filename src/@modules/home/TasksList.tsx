@@ -1,6 +1,6 @@
 import { messages } from '@lib/constant';
 import { ITask } from '@lib/interfaces/tasks.interface';
-import { useAppDispatch, useAppSelector } from '@lib/redux/hooks';
+import { useAppDispatch } from '@lib/redux/hooks';
 import { updateTask } from '@lib/redux/tasks/tasksSlice';
 import { Form, Modal, message } from 'antd';
 import dayjs from 'dayjs';
@@ -8,11 +8,14 @@ import React, { useState } from 'react';
 import TaskCard from './TaskCard';
 import TaskForm from './TaskForm';
 
-const TasksList = () => {
+interface IProps {
+  tasks: ITask[];
+}
+
+const TasksList: React.FC<IProps> = ({ tasks }) => {
   const [messageApi, messageHolder] = message.useMessage();
   const [formInstance] = Form.useForm();
   const dispatch = useAppDispatch();
-  const { tasks } = useAppSelector((store) => store.tasksSlice);
   const [task, setTask] = useState<ITask>(null);
 
   return (
