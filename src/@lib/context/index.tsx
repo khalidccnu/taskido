@@ -1,6 +1,6 @@
-import type { ThemeConfig } from "antd";
-import { ConfigProvider } from "antd";
-import React from "react";
+import type { ThemeConfig } from 'antd';
+import { ConfigProvider } from 'antd';
+import React from 'react';
 
 type TProps = {
   children: React.ReactNode;
@@ -9,14 +9,14 @@ type TProps = {
 export const Providers = ({ children }: TProps) => {
   const theme: ThemeConfig = {
     token: {
-      fontFamily: "var(--font-josefinSans)",
+      fontFamily: 'var(--font-josefinSans)',
       fontSize: 16,
-      colorPrimary: "#ac941f",
-      colorPrimaryActive: "#5e5217",
-      colorPrimaryBorder: "#ac941f",
-      colorPrimaryHover: "#5e5217",
-      colorLinkActive: "#5e5217",
-      colorLinkHover: "#5e5217",
+      colorPrimary: '#ac941f',
+      colorPrimaryActive: '#5e5217',
+      colorPrimaryBorder: '#ac941f',
+      colorPrimaryHover: '#5e5217',
+      colorLinkActive: '#5e5217',
+      colorLinkHover: '#5e5217',
       screenXSMax: 639,
       screenSMMin: 640,
       screenSM: 640,

@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./utils/index.scss";
+@import './utils/index.scss';
+@import './core/index.scss';
 
 // Scrollbar Customize
 ::-webkit-scrollbar {

@@ -1,3 +1,3 @@
 export const messages = {
-  wrong: "Something went wrong!",
+  wrong: 'Something went wrong!',
 };

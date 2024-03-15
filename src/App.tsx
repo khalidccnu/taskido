@@ -1,11 +1,11 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LandingLayout from "./@base/layouts/LandingLayout";
-import { Providers } from "./@lib/context";
+import LandingLayout from '@base/layouts/LandingLayout';
+import { Providers } from '@lib/context';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const App = () => {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <LandingLayout />,
       errorElement: <></>,
       children: [

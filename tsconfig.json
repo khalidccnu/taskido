@@ -19,8 +19,20 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+
+    /* Path */
+    "baseUrl": ".",
+    "paths": {
+      "@base/*": ["./src/@base/*"],
+      "@lib/*": ["./src/@lib/*"],
+      "@modules/*": ["./src/@modules/*"],
+      "@styles/*": ["./src/@styles/*"]
+    },
+
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
