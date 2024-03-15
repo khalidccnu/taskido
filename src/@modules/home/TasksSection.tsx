@@ -1,6 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import BaseFilter from '@base/components/BaseFilter';
 import { messages } from '@lib/constant';
+import { ITask } from '@lib/interfaces/tasks.interface';
 import { useAppDispatch, useAppSelector } from '@lib/redux/hooks';
 import { addTask } from '@lib/redux/tasks/tasksSlice';
 import { $$, cn } from '@lib/utils';
@@ -19,7 +20,7 @@ interface IProps {
 const TasksSection: React.FC<IProps> = ({ className }) => {
   const location = useLocation();
   const [isLoading, setLoading] = useState(true);
-  const [purifiedTasks, setPurifiedTasks] = useState([]);
+  const [purifiedTasks, setPurifiedTasks] = useState<ITask[]>([]);
   const { tasks } = useAppSelector((store) => store.tasksSlice);
   const [messageApi, messageHolder] = message.useMessage();
   const [formInstance] = Form.useForm();
@@ -27,10 +28,11 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
-    const { priority, sort } = qs.parse(location.search);
+    const { status, priority, sort } = qs.parse(location.search);
     let arr = tasks;
 
-    if (priority) arr = tasks?.filter((task) => task?.priority === priority);
+    if (status) arr = arr?.filter((task) => task?.status === status);
+    if (priority) arr = arr?.filter((task) => task?.priority === priority);
     if (sort && (sort === 'ASC' || sort === 'DESC')) arr = $$.sort([...arr], 'due_date', sort);
 
     setPurifiedTasks(arr);
@@ -40,6 +42,13 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
   return (
     <section className={cn('tasks_section', className)}>
       {messageHolder}
+      <div className="mb-2 counter">
+        <div className="container">
+          <p className="text-end">
+            Completed: {purifiedTasks?.filter((task) => task?.status === 'done')?.length} / {purifiedTasks?.length}
+          </p>
+        </div>
+      </div>
       <BaseFilter className="mb-5" />
       <div className="container">
         {isLoading ? (

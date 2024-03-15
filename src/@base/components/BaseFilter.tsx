@@ -6,6 +6,12 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const status = [
+  { label: 'Todo', value: 'todo' },
+  { label: 'Progress', value: 'progress' },
+  { label: 'Done', value: 'done' },
+];
+
+const priority = [
   { label: 'Low', value: 'low' },
   { label: 'Medium', value: 'medium' },
   { label: 'High', value: 'high' },
@@ -31,6 +37,30 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
           <Select
             allowClear
             showSearch
+            placeholder="Status"
+            defaultValue={qs.parse(location.search)?.status}
+            onChange={(value) =>
+              navigate(
+                qs.stringifyUrl(
+                  {
+                    url: location.pathname,
+                    query: { ...qs.parse(location.search), status: value },
+                  },
+                  { skipNull: true },
+                ),
+              )
+            }
+            className="w-24"
+          >
+            {status?.map((status, idx) => (
+              <Select.Option key={idx} title={status?.label} value={status?.value} data={status}>
+                {status?.label}
+              </Select.Option>
+            ))}
+          </Select>
+          <Select
+            allowClear
+            showSearch
             placeholder="Priority"
             defaultValue={qs.parse(location.search)?.priority}
             onChange={(value) =>
@@ -46,9 +76,9 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
             }
             className="w-24"
           >
-            {status?.map((status, idx) => (
-              <Select.Option key={idx} title={status?.label} value={status?.value} data={status}>
-                {status?.label}
+            {priority?.map((priority, idx) => (
+              <Select.Option key={idx} title={priority?.label} value={priority?.value} data={priority}>
+                {priority?.label}
               </Select.Option>
             ))}
           </Select>
