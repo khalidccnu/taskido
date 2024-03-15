@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Root from "./Root";
+import LandingLayout from "./@base/layouts/LandingLayout";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root />,
+      element: <LandingLayout />,
       errorElement: <></>,
       children: [
         {
