@@ -29,7 +29,7 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
 
   useEffect(() => {
     const { status, priority, sort } = qs.parse(location.search);
-    let arr = tasks;
+    let arr = tasks?.filter((task) => task?.status !== 'archive');
 
     if (status) arr = arr?.filter((task) => task?.status === status);
     if (priority) arr = arr?.filter((task) => task?.priority === priority);
@@ -56,7 +56,7 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
         ) : purifiedTasks?.length ? (
           <TasksList tasks={purifiedTasks} />
         ) : (
-          <Empty description="No Task Available" />
+          <Empty description="No Task Available!" />
         )}
       </div>
       <FloatButton icon={<PlusOutlined />} tooltip={<p>New Task</p>} onClick={() => setDrawerOpen(true)} />

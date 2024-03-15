@@ -9,20 +9,23 @@ import TaskCard from './TaskCard';
 import TaskForm from './TaskForm';
 
 interface IProps {
+  isArchive?: boolean;
   tasks: ITask[];
 }
 
-const TasksList: React.FC<IProps> = ({ tasks }) => {
+const TasksList: React.FC<IProps> = ({ isArchive = false, tasks }) => {
   const [messageApi, messageHolder] = message.useMessage();
   const [formInstance] = Form.useForm();
   const dispatch = useAppDispatch();
   const [task, setTask] = useState<ITask>(null);
 
   return (
-    <React.Fragment>
+    <div className="tasks_list">
       {messageHolder}
       <div className="wrapper">
-        {tasks?.map((task) => <TaskCard key={task?.id} task={task} setTask={(task) => setTask(task)} />)}
+        {tasks?.map((task) => (
+          <TaskCard key={task?.id} isArchive={isArchive} task={task} setTask={(task) => setTask(task)} />
+        ))}
       </div>
       <Modal width={420} open={!!task?.id} onCancel={() => setTask(null)} footer={null}>
         <TaskForm
@@ -37,7 +40,7 @@ const TasksList: React.FC<IProps> = ({ tasks }) => {
           }}
         />
       </Modal>
-    </React.Fragment>
+    </div>
   );
 };
 

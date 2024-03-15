@@ -8,6 +8,7 @@ import { Badge, Button, Card, Popconfirm, Popover, Tag, message } from 'antd';
 import React from 'react';
 
 interface IProps {
+  isArchive?: boolean;
   task: ITask;
   setTask: (task: ITask) => void;
 }
@@ -31,7 +32,7 @@ const status = [
   },
 ];
 
-const TaskCard: React.FC<IProps> = ({ task, setTask }) => {
+const TaskCard: React.FC<IProps> = ({ isArchive = false, task, setTask }) => {
   const [messageApi, messageHolder] = message.useMessage();
   const dispatch = useAppDispatch();
 
@@ -56,7 +57,7 @@ const TaskCard: React.FC<IProps> = ({ task, setTask }) => {
           // cover={<img alt="" src="/images/home/to_do_list.svg" className="max-h-60" />}
           actions={[
             <EyeOutlined key="view" />,
-            <EditOutlined key="edit" onClick={() => setTask(task)} />,
+            <EditOutlined key="edit" onClick={isArchive ? null : () => setTask(task)} />,
             <Popconfirm
               key="delete"
               title="Are you sure to delete it?"
@@ -70,33 +71,33 @@ const TaskCard: React.FC<IProps> = ({ task, setTask }) => {
             <Popover
               key="ellipsis"
               content={
-                <div className="flex flex-col gap-2">
-                  {status?.map((elem, idx) => {
-                    if (elem?.value === task?.status) return;
+                isArchive ? null : (
+                  <div className="flex flex-col gap-2">
+                    {status?.map((elem, idx) => {
+                      if (elem?.value === task?.status) return;
 
-                    return (
-                      <Button
-                        key={idx}
-                        type="text"
-                        onClick={() => {
-                          dispatch(updateTask({ id: task?.id, task: { status: elem?.value } }));
-                          messageApi.success(messages.task.update);
-                        }}
-                      >
-                        {elem?.label}
-                      </Button>
-                    );
-                  })}
-                </div>
+                      return (
+                        <Button
+                          key={idx}
+                          type="text"
+                          onClick={() => {
+                            dispatch(updateTask({ id: task?.id, task: { status: elem?.value } }));
+                            messageApi.success(messages.task.update);
+                          }}
+                        >
+                          {elem?.label}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                )
               }
             >
               <EllipsisOutlined />
             </Popover>,
           ]}
         >
-          <div className="flex justify-end mb-4">
-            <Tag>{task?.status?.toUpperCase()}</Tag>
-          </div>
+          <div className="flex justify-end mb-4">{isArchive || <Tag>{task?.status?.toUpperCase()}</Tag>}</div>
           <Card.Meta title={task?.title} description={task?.description} />
         </Card>
       </Badge.Ribbon>

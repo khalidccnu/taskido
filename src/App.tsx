@@ -1,5 +1,6 @@
 import LandingLayout from '@base/layouts/LandingLayout';
 import { Providers } from '@lib/context';
+import ArchiveSection from '@modules/archive/ArchiveSection';
 import TasksSection from '@modules/home/TasksSection';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -13,6 +14,10 @@ const App = () => {
         {
           index: true,
           element: <TasksSection className="py-10" />,
+        },
+        {
+          path: 'archive',
+          element: <ArchiveSection className="py-10" />,
         },
       ],
     },

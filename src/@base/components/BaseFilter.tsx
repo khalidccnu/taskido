@@ -1,5 +1,6 @@
+import { paths } from '@lib/constant';
 import { cn } from '@lib/utils';
-import { Select } from 'antd';
+import { Button, Select } from 'antd';
 import { ClassValue } from 'clsx';
 import qs from 'query-string';
 import React from 'react';
@@ -34,6 +35,7 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
     <div className={cn('base_filter', className)}>
       <div className="container">
         <div className="base_filter_wrapper">
+          <Button onClick={() => navigate(paths.archive)}>Archive</Button>
           <Select
             allowClear
             showSearch
