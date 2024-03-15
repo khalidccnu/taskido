@@ -1,13 +1,37 @@
-import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { DeleteOutlined, EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
+import { ITask } from '@lib/interfaces/tasks.interface';
+import { useAppDispatch } from '@lib/redux/hooks';
+import { removeTask } from '@lib/redux/tasks/tasksSlice';
+import { Card, Popconfirm } from 'antd';
 
-const TaskCard = () => {
+interface IProps {
+  task: ITask;
+  setTask: (task: ITask) => void;
+}
+
+const TaskCard: React.FC<IProps> = ({ task, setTask }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <Card
       cover={<img alt="" src="/images/home/to_do_list.svg" className="max-h-60" />}
-      actions={[<DeleteOutlined key="delete" />, <EditOutlined key="edit" />, <EllipsisOutlined key="ellipsis" />]}
+      actions={[
+        <EyeOutlined key="view" />,
+        <EditOutlined key="edit" onClick={() => setTask(task)} />,
+        <Popconfirm
+          key="delete"
+          title="Are you sure to delete it?"
+          onConfirm={() => dispatch(removeTask({ id: task?.id }))}
+          okText="Yes"
+          cancelText="No"
+          okButtonProps={{ danger: true }}
+        >
+          <DeleteOutlined />
+        </Popconfirm>,
+        <EllipsisOutlined key="ellipsis" />,
+      ]}
     >
-      <Card.Meta title="Task Title" description="Task Description" />
+      <Card.Meta title={task?.title} description={task?.description} />
     </Card>
   );
 };
