@@ -1,12 +1,7 @@
 import { TId } from '@base/interfaces';
-import { ITask } from '@lib/interfaces/tasks.interface';
+import { ITask, ITaskUpdate } from '@lib/interfaces/tasks.interface';
 import { $$, storage } from '@lib/utils';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-
-interface ITaskModification {
-  id?: TId;
-  task?: ITask;
-}
 
 interface IState {
   tasks: ITask[];
@@ -29,14 +24,14 @@ const tasksSlice = createSlice({
       state.tasks.push(action.payload);
       storage.setData('tasks', JSON.stringify(state.tasks));
     },
-    updateTask: (state, action: PayloadAction<ITaskModification>) => {
+    updateTask: (state, action: PayloadAction<ITaskUpdate>) => {
       const itemIdx = state.tasks.findIndex((item) => item.id === action.payload.id);
 
       state.tasks[itemIdx] = { ...state.tasks[itemIdx], ...action.payload.task };
       storage.setData('tasks', JSON.stringify(state.tasks));
     },
-    removeTask: (state, action: PayloadAction<ITaskModification>) => {
-      const itemIdx = state.tasks.findIndex((item) => item.id === action.payload.id);
+    removeTask: (state, action: PayloadAction<TId>) => {
+      const itemIdx = state.tasks.findIndex((item) => item.id === action.payload);
 
       state.tasks.splice(itemIdx, 1);
       storage.setData('tasks', JSON.stringify(state.tasks));

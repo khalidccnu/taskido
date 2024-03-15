@@ -13,7 +13,7 @@ export interface ITask {
 export interface ITaskCreate {
   title: string;
   description: string;
-  due_date: Date;
+  due_date: Dayjs;
   priority: string;
   status: string;
 }
