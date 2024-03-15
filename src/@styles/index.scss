@@ -17,3 +17,9 @@
   background-color: var(--color-primary);
   border-radius: 1rem;
 }
+
+// ant customization
+.ant-btn-primary {
+  background-color: var(--color-primary);
+  box-shadow: none !important;
+}
