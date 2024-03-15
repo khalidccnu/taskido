@@ -1,5 +1,6 @@
 import LandingLayout from '@base/layouts/LandingLayout';
 import { Providers } from '@lib/context';
+import TasksSection from '@modules/home/TasksSection';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
       children: [
         {
           index: true,
-          element: <></>,
+          element: <TasksSection className="py-10" />,
         },
       ],
     },
