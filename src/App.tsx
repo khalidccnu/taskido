@@ -1,3 +1,4 @@
+import ErrorLayout from '@base/layouts/ErrorLayout';
 import LandingLayout from '@base/layouts/LandingLayout';
 import { Providers } from '@lib/context';
 import ArchiveSection from '@modules/archive/ArchiveSection';
@@ -9,7 +10,7 @@ const App = () => {
     {
       path: '/',
       element: <LandingLayout />,
-      errorElement: <></>,
+      errorElement: <ErrorLayout />,
       children: [
         {
           index: true,
