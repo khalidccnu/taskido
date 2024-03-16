@@ -33,3 +33,12 @@
   background-color: var(--color-primary);
   box-shadow: none !important;
 }
+
+.ant-card {
+  .ant-card-body {
+    min-height: 9rem;
+    .ant-card-meta-description {
+      @apply line-clamp-1;
+    }
+  }
+}

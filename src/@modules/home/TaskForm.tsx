@@ -1,5 +1,6 @@
 import { ITask, ITaskCreate } from '@lib/interfaces/tasks.interface';
 import { Button, Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
+import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
 interface IProps {
@@ -27,7 +28,7 @@ const TaskForm: React.FC<IProps> = ({ loading, form, formType = 'create', initia
       layout="vertical"
       form={form}
       initialValues={initialValues}
-      onFinish={(values) => onFinish(values)}
+      onFinish={(values) => onFinish({ ...values, due_date: dayjs(values?.due_date)?.toISOString() })}
     >
       <Row gutter={{ sm: 16, md: 20, lg: 32 }}>
         <Col xs={24}>
@@ -45,16 +46,7 @@ const TaskForm: React.FC<IProps> = ({ loading, form, formType = 'create', initia
           </Form.Item>
         </Col>
         <Col xs={24}>
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: 'Description is required!',
-              },
-            ]}
-          >
+          <Form.Item label="Description" name="description">
             <Input.TextArea placeholder="Description" />
           </Form.Item>
         </Col>
@@ -83,12 +75,7 @@ const TaskForm: React.FC<IProps> = ({ loading, form, formType = 'create', initia
               },
             ]}
           >
-            <Select
-              allowClear
-              showSearch
-              placeholder="Priority"
-              filterOption={(input, option: any) => option?.value?.toLowerCase()?.includes(input?.toLowerCase())}
-            >
+            <Select allowClear showSearch placeholder="Priority">
               {taskStatus?.map((status, idx) => (
                 <Select.Option key={idx} title={status?.label} value={status?.value} data={status}>
                   {status?.label}

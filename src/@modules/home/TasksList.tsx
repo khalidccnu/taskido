@@ -1,3 +1,4 @@
+import { BorderRightOutlined } from '@ant-design/icons';
 import { messages } from '@lib/constant';
 import { ITask } from '@lib/interfaces/tasks.interface';
 import { useAppDispatch } from '@lib/redux/hooks';
@@ -17,6 +18,7 @@ const TasksList: React.FC<IProps> = ({ isArchive = false, tasks }) => {
   const [messageApi, messageHolder] = message.useMessage();
   const [formInstance] = Form.useForm();
   const dispatch = useAppDispatch();
+  const [viewTask, setViewTask] = useState<Partial<ITask>>(null);
   const [task, setTask] = useState<ITask>(null);
 
   return (
@@ -24,9 +26,24 @@ const TasksList: React.FC<IProps> = ({ isArchive = false, tasks }) => {
       {messageHolder}
       <div className="wrapper">
         {tasks?.map((task) => (
-          <TaskCard key={task?.id} isArchive={isArchive} task={task} setTask={(task) => setTask(task)} />
+          <TaskCard
+            key={task?.id}
+            isArchive={isArchive}
+            task={task}
+            setViewTask={(task) => setViewTask(task)}
+            setTask={(task) => setTask(task)}
+          />
         ))}
       </div>
+      <Modal width={420} open={!!viewTask?.id} onCancel={() => setViewTask(null)} footer={null}>
+        <div className="flex flex-col gap-2 mt-8">
+          <h3 className="space-x-1.5 text-lg font-semibold title">
+            <BorderRightOutlined />
+            <span>{viewTask?.title}</span>
+          </h3>
+          {viewTask?.description && <p className="description">{viewTask?.description}</p>}
+        </div>
+      </Modal>
       <Modal width={420} open={!!task?.id} onCancel={() => setTask(null)} footer={null}>
         <TaskForm
           formType="update"

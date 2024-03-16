@@ -31,6 +31,15 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const filterFn = (name: string, value: string | string[]) => {
+    navigate(
+      qs.stringifyUrl({
+        url: location.pathname,
+        query: { ...qs.parse(location.search), [name]: value },
+      }),
+    );
+  };
+
   return (
     <div className={cn('base_filter', className)}>
       <div className="container">
@@ -41,17 +50,7 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
             showSearch
             placeholder="Status"
             defaultValue={qs.parse(location.search)?.status}
-            onChange={(value) =>
-              navigate(
-                qs.stringifyUrl(
-                  {
-                    url: location.pathname,
-                    query: { ...qs.parse(location.search), status: value },
-                  },
-                  { skipNull: true },
-                ),
-              )
-            }
+            onChange={(value) => filterFn('status', value)}
             className="w-24"
           >
             {status?.map((status, idx) => (
@@ -65,17 +64,7 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
             showSearch
             placeholder="Priority"
             defaultValue={qs.parse(location.search)?.priority}
-            onChange={(value) =>
-              navigate(
-                qs.stringifyUrl(
-                  {
-                    url: location.pathname,
-                    query: { ...qs.parse(location.search), priority: value },
-                  },
-                  { skipNull: true },
-                ),
-              )
-            }
+            onChange={(value) => filterFn('priority', value)}
             className="w-24"
           >
             {priority?.map((priority, idx) => (
@@ -87,19 +76,9 @@ const BaseFilter: React.FC<IProps> = ({ className }) => {
           <Select
             allowClear
             showSearch
-            placeholder="Sort"
+            placeholder="Sort By Due Date"
             defaultValue={qs.parse(location.search)?.sort}
-            onChange={(value) =>
-              navigate(
-                qs.stringifyUrl(
-                  {
-                    url: location.pathname,
-                    query: { ...qs.parse(location.search), sort: value },
-                  },
-                  { skipNull: true },
-                ),
-              )
-            }
+            onChange={(value) => filterFn('sort', value)}
             className="w-24"
           >
             {sort?.map((sort, idx) => (

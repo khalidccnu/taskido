@@ -5,7 +5,7 @@ export interface ITask {
   id: TId;
   title: string;
   description: string;
-  due_date: Dayjs;
+  due_date: string | Dayjs;
   priority: string;
   status: string;
 }
@@ -13,7 +13,7 @@ export interface ITask {
 export interface ITaskCreate {
   title: string;
   description: string;
-  due_date: Dayjs;
+  due_date: string | Dayjs;
   priority: string;
   status: string;
 }
