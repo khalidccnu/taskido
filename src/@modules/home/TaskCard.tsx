@@ -1,4 +1,5 @@
 import { CalendarOutlined, DeleteOutlined, EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
+import { TId } from '@base/interfaces';
 import { messages } from '@lib/constant';
 import { ITask } from '@lib/interfaces/tasks.interface';
 import { useAppDispatch } from '@lib/redux/hooks';
@@ -38,6 +39,16 @@ const TaskCard: React.FC<IProps> = ({ isArchive = false, task, setViewTask, setT
   const [messageApi, messageHolder] = message.useMessage();
   const dispatch = useAppDispatch();
 
+  const updateFn = (id: TId, status: string) => {
+    dispatch(updateTask({ id, task: { status } }));
+    messageApi.success(messages.task.update);
+  };
+
+  const deleteFn = (id: TId) => {
+    dispatch(removeTask(id));
+    messageApi.success(messages.task.remove);
+  };
+
   return (
     <React.Fragment>
       {messageHolder}
@@ -66,7 +77,7 @@ const TaskCard: React.FC<IProps> = ({ isArchive = false, task, setViewTask, setT
             <Popconfirm
               key="delete"
               title="Are you sure to delete it?"
-              onConfirm={() => dispatch(removeTask(task?.id))}
+              onConfirm={() => deleteFn(task?.id)}
               okText="Yes"
               cancelText="No"
               okButtonProps={{ danger: true }}
@@ -82,14 +93,7 @@ const TaskCard: React.FC<IProps> = ({ isArchive = false, task, setViewTask, setT
                       if (elem?.value === task?.status) return;
 
                       return (
-                        <Button
-                          key={idx}
-                          type="text"
-                          onClick={() => {
-                            dispatch(updateTask({ id: task?.id, task: { status: elem?.value } }));
-                            messageApi.success(messages.task.update);
-                          }}
-                        >
+                        <Button key={idx} type="text" onClick={() => updateFn(task?.id, elem?.value)}>
                           {elem?.label}
                         </Button>
                       );

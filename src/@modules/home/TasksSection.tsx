@@ -26,6 +26,7 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
   const [formInstance] = Form.useForm();
   const dispatch = useAppDispatch();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [taskCount, setTaskCount] = useState({ done: 0, total: 0 });
 
   useEffect(() => {
     const { status, priority, sort } = qs.parse(location.search);
@@ -39,13 +40,20 @@ const TasksSection: React.FC<IProps> = ({ className }) => {
     setLoading(false);
   }, [tasks, location.search]);
 
+  useEffect(() => {
+    const done = tasks?.filter((task) => task?.status === 'done')?.length;
+    const total = tasks?.filter((task) => task?.status !== 'archive')?.length;
+
+    setTaskCount({ done, total });
+  }, [tasks]);
+
   return (
     <section className={cn('tasks_section', className)}>
       {messageHolder}
       <div className="mb-2 counter">
         <div className="container">
           <p className="text-end">
-            Completed: {purifiedTasks?.filter((task) => task?.status === 'done')?.length} / {purifiedTasks?.length}
+            Completed: {taskCount.done}/{taskCount.total}
           </p>
         </div>
       </div>
